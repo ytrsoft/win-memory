@@ -1,80 +1,42 @@
 package com.ytrsoft.core;
 
-import com.sun.jna.platform.win32.WinDef.HWND;
-import com.ytrsoft.exceptions.MemoryException;
-import com.ytrsoft.exceptions.NotFoundException;
-import com.ytrsoft.interfaces.JKernel32;
-import com.ytrsoft.interfaces.JUser32;
+import com.ytrsoft.util.Memory;
+import com.ytrsoft.win32.JKernel32Api;
 
-public class ProcessMemory implements Active, Readable, Writeable {
+public class ProcessMemory {
 
     private int pid;
+    private int address;
 
-    public ProcessMemory(int pid) {
+    private static final int MEMORY_INT_SIZE = 4;
+
+    ProcessMemory(int pid, int address) {
         this.pid = pid;
+        this.address = address;
     }
 
-    public ProcessMemory(String name) {
-        try {
-            this.pid = getPIdByName(name);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
+    public int readInt() {
+        int hp = JKernel32Api.openProcess(pid);
+        if (hp <= 0) {
+            return -1;
         }
-    }
-
-    private int getPIdByName(String name) throws NotFoundException {
-        HWND hWnd = JUser32.findWindow(name, null);
-        if (hWnd == null) {
-            throw new NotFoundException(name);
+        byte[] bytes = JKernel32Api.readProcessMemory(hp, address, MEMORY_INT_SIZE);
+        if (bytes == null) {
+            return -1;
         }
-        return JUser32.getWindowThreadProcessId(hWnd);
+        JKernel32Api.closeHandle(hp);
+        return Memory.bytesToUnsignedInt(bytes);
     }
 
-    private void throwMemoryException(String tag) throws MemoryException {
-        throw new MemoryException(tag, JKernel32.getLastError());
-    }
-
-    @Override
-    public byte[] read(int address, int size) {
-        byte[] ret = null;
-        try {
-            int hp = JKernel32.openProcess(pid);
-            if (hp <= 0) {
-                throwMemoryException("OpenProcess");
-            }
-            ret = JKernel32.readProcessMemory(hp, address, size);
-            if (ret == null) {
-                throwMemoryException("ReadProcessMemory");
-            }
-            JKernel32.closeHandle(hp);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public boolean writeInt(int value) {
+        int hp = JKernel32Api.openProcess(pid);
+        if (hp <= 0) {
+            return false;
         }
-
+        int[] lpBuffer = new int[] { value };
+        boolean ret = JKernel32Api.writeProcessMemory(hp, address, lpBuffer);
+        JKernel32Api.closeHandle(hp);
         return ret;
     }
 
-    @Override
-    public boolean write(int address, int[] buffer) {
-        boolean status = false;
-        try {
-            int hp = JKernel32.openProcess(pid);
-            if (hp <= 0) {
-                throwMemoryException("OpenProcess");
-            }
-            status = JKernel32.writeProcessMemory(hp, address, buffer);
-            if (!status) {
-                throwMemoryException("WriteProcessMemory");
-            }
-            JKernel32.closeHandle(hp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return status;
-    }
-
-    @Override
-    public boolean isActive() {
-        return JKernel32.openProcess(pid) > 0;
-    }
 }
