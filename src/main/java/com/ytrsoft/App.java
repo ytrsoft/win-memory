@@ -14,9 +14,9 @@ public class App extends AppGUI {
 
     @Override
     protected void update(int val) {
-        int value = this.memory.readInt();
+        int value = memory.readInt();
         int nVal = value + val;
-        this.memory.writeInt(nVal);
+        memory.writeInt(nVal);
     }
 
     private ProcessMemory buildProcessMemory() {
