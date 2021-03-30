@@ -4,14 +4,14 @@ import com.ytrsoft.core.ProcessMemory;
 import com.ytrsoft.core.ProcessMemoryBuilder;
 import com.ytrsoft.ui.AppGUI;
 
-public class UITest extends AppGUI {
+public class App extends AppGUI {
 
     private final ProcessMemory pm;
 
     public static final int BASE_ADDRESS = 0X0CB51330;
     public static final String CLASS_NAME = "Purble Place";
 
-    public UITest() {
+    public App() {
         pm = buildProcessMemory();
     }
 
@@ -28,7 +28,7 @@ public class UITest extends AppGUI {
     }
 
     public static void main(String[] args) {
-        launch(UITest.class);
+        launch(App.class);
     }
 
 }

@@ -20,9 +20,9 @@ public class ProcessMemoryImpl implements ProcessMemory {
     }
 
     @Override
-    public void write(int written) {
+    public void write(int value) {
         HANDLE handle = JKernel32Api.openProcess(pid);
-        JKernel32Api.writeProcessMemory(handle, address, written);
+        JKernel32Api.writeProcessMemory(handle, address, value);
     }
 
 }
