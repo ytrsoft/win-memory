@@ -8,7 +8,7 @@ public class App extends AppGUI {
 
     private final ProcessMemory pm;
 
-    public static final int BASE_ADDRESS = 0X0CB51330;
+    public static final int ADDRESS = 0X00000000;
     public static final String CLASS_NAME = "Purble Place";
 
     public App() {
@@ -25,7 +25,7 @@ public class App extends AppGUI {
     public ProcessMemory buildProcessMemory() {
         return new ProcessMemoryBuilder()
                 .className(CLASS_NAME)
-                .address(BASE_ADDRESS)
+                .address(ADDRESS)
                 .build();
     }
 
