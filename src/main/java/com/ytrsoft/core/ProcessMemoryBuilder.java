@@ -1,6 +1,6 @@
 package com.ytrsoft.core;
 
-import com.sun.jna.platform.win32.WinDef;
+import com.sun.jna.platform.win32.WinDef.HWND;
 import com.ytrsoft.win32.JUser32Api;
 
 import java.util.LinkedList;
@@ -8,42 +8,42 @@ import java.util.List;
 
 public class ProcessMemoryBuilder {
 
-    private String appName;
+    private String className;
 
-    private String titleName;
+    private String windowName;
 
-    private List<Integer> addressList = new LinkedList<>();
+    private List<Integer> addrList = new LinkedList<>();
 
-    public ProcessMemoryBuilder appName(String appName) {
-        this.appName = appName;
+    public ProcessMemoryBuilder className(String className) {
+        this.className = className;
         return this;
     }
 
-    public ProcessMemoryBuilder titleName(String titleName) {
-        this.titleName = titleName;
+    public ProcessMemoryBuilder windowName(String windowName) {
+        this.windowName = windowName;
         return this;
     }
 
-    public ProcessMemoryBuilder appendAddress(Integer address) {
-        addressList.add(address);
+    public ProcessMemoryBuilder offset(int address) {
+        this.addrList.add(address);
         return this;
-    }
-
-    private int getAddress() {
-        int address = 0;
-        for (int i = 0; i < addressList.size() ; i++) {
-            address = address + addressList.get(i);
-        }
-        return address;
-    }
-
-    private int getPid() {
-        WinDef.HWND hWnd = JUser32Api.findWindow(appName, titleName);
-        return JUser32Api.getWindowThreadProcessId(hWnd);
     }
 
     public ProcessMemory build() {
-        return new ProcessMemory(getPid(), getAddress());
+        return new ProcessMemoryImpl(getPId(), getAddress());
+    }
+
+    private int getPId() {
+        HWND hWnd = JUser32Api.findWindow(className, windowName);
+        return JUser32Api.getWindowThreadProcessId(hWnd);
+    }
+
+    private int getAddress() {
+        int ret = 0;
+        for (int offset: addrList) {
+            ret = ret + offset;
+        }
+        return ret;
     }
 
 }

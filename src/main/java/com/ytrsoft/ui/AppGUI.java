@@ -26,15 +26,15 @@ public abstract class AppGUI extends XFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         XButton btn = (XButton) e.getSource();
         if (btn.equals(btnAdd)) {
-            update(1);
+            onUpdate(1);
             return;
         }
         if (btn.equals(btnSub)) {
-            update(-1);
+            onUpdate(-1);
         }
     }
 
-    protected abstract void update(int val);
+    protected abstract void onUpdate(int val);
 
 }
 

@@ -1,6 +1,9 @@
 package com.ytrsoft.win32;
 
-import com.sun.jna.platform.win32.WinDef;
+import com.sun.jna.platform.win32.Kernel32Util;
+import com.sun.jna.platform.win32.Win32Exception;
+import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.ptr.IntByReference;
 
 public final class JUser32Api {
 
@@ -8,14 +11,20 @@ public final class JUser32Api {
         throw new UnsupportedOperationException();
     }
 
-    public static WinDef.HWND findWindow(String lpClassName, String lpWindowName) {
-        return JUser32.SYNC_INSTANCE.FindWindowA(lpClassName, lpWindowName);
+    public static HWND findWindow(String lpClassName, String lpWindowName) {
+        HWND hWnd = JUser32.SYNC_INSTANCE.FindWindow(lpClassName, lpWindowName);
+        if (hWnd == null) {
+            throw new Win32Exception(JKernel32.SYNC_INSTANCE.GetLastError());
+        }
+        return hWnd;
     }
 
-    public static int getWindowThreadProcessId(WinDef.HWND hWnd) {
-        int[] lpdwProcessId = new int[1];
+    public static int getWindowThreadProcessId(HWND hWnd) {
+        IntByReference lpdwProcessId = new IntByReference(0);
         JUser32.SYNC_INSTANCE.GetWindowThreadProcessId(hWnd, lpdwProcessId);
-        return lpdwProcessId[0];
+        int pid = lpdwProcessId.getValue();
+        Kernel32Util.freeLocalMemory(lpdwProcessId.getPointer());
+        return pid;
     }
 
 }
