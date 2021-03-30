@@ -24,7 +24,9 @@ public class App extends AppGUI {
 
     public ProcessMemory buildProcessMemory() {
         return new ProcessMemoryBuilder()
-                .className(CLASS_NAME).offset(BASE_ADDRESS).build();
+                    .className(CLASS_NAME)
+                    .address(BASE_ADDRESS)
+                    .build();
     }
 
     public static void main(String[] args) {

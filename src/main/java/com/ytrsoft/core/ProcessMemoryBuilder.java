@@ -3,8 +3,6 @@ package com.ytrsoft.core;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.ytrsoft.win32.JUser32Api;
 
-import java.util.LinkedList;
-import java.util.List;
 
 public class ProcessMemoryBuilder {
 
@@ -12,7 +10,19 @@ public class ProcessMemoryBuilder {
 
     private String windowName;
 
-    private List<Integer> addrList = new LinkedList<>();
+    private int address = 0X00000000;
+
+    private int offset = 0X00000000;
+
+    public ProcessMemoryBuilder address(int address) {
+        this.address = address;
+        return this;
+    }
+
+    public ProcessMemoryBuilder offset(int offset) {
+        this.offset = offset;
+        return this;
+    }
 
     public ProcessMemoryBuilder className(String className) {
         this.className = className;
@@ -21,11 +31,6 @@ public class ProcessMemoryBuilder {
 
     public ProcessMemoryBuilder windowName(String windowName) {
         this.windowName = windowName;
-        return this;
-    }
-
-    public ProcessMemoryBuilder offset(int address) {
-        this.addrList.add(address);
         return this;
     }
 
@@ -39,11 +44,7 @@ public class ProcessMemoryBuilder {
     }
 
     private int getAddress() {
-        int ret = 0;
-        for (int offset: addrList) {
-            ret = ret + offset;
-        }
-        return ret;
+        return address + offset;
     }
 
 }
