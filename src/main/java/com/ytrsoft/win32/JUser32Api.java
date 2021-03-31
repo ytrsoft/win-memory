@@ -22,9 +22,7 @@ public final class JUser32Api {
     public static int getWindowThreadProcessId(HWND hWnd) {
         IntByReference lpdwProcessId = new IntByReference(0);
         JUser32.SYNC_INSTANCE.GetWindowThreadProcessId(hWnd, lpdwProcessId);
-        int pid = lpdwProcessId.getValue();
-        Kernel32Util.freeLocalMemory(lpdwProcessId.getPointer());
-        return pid;
+        return lpdwProcessId.getValue();
     }
 
 }
