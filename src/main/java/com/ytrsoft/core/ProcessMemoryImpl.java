@@ -16,13 +16,16 @@ public class ProcessMemoryImpl implements ProcessMemory {
     @Override
     public int read() {
         HANDLE handle = JKernel32Api.openProcess(pid);
-        return JKernel32Api.readProcessMemory(handle, address);
+        int ret = JKernel32Api.readProcessMemory(handle, address);
+        JKernel32Api.closeHandle(handle);
+        return ret;
     }
 
     @Override
     public void write(int value) {
         HANDLE handle = JKernel32Api.openProcess(pid);
         JKernel32Api.writeProcessMemory(handle, address, value);
+        JKernel32Api.closeHandle(handle);
     }
 
 }

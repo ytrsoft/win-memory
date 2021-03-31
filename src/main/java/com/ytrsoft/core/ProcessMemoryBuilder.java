@@ -6,7 +6,6 @@ import com.ytrsoft.win32.JUser32Api;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class ProcessMemoryBuilder {
 
     private String className;
