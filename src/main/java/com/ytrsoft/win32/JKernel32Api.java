@@ -1,6 +1,5 @@
 package com.ytrsoft.win32;
 
-import com.sun.jna.platform.win32.Kernel32Util;
 import com.sun.jna.platform.win32.Win32Exception;
 import com.sun.jna.platform.win32.WinNT;
 import com.sun.jna.ptr.IntByReference;
@@ -30,19 +29,16 @@ public final class JKernel32Api {
         if (!status) {
             throw new Win32Exception(JKernel32.SYNC_INSTANCE.GetLastError());
         }
-        int ret = lpBuffer.getValue();
-        Kernel32Util.freeLocalMemory(lpBuffer.getPointer());
-        return ret;
+        return lpBuffer.getValue();
     }
 
-    public static void writeProcessMemory(WinNT.HANDLE handle, int address, int written) {
-        IntByReference lpBuffer = new IntByReference(written);
+    public static void writeProcessMemory(WinNT.HANDLE handle, int address, int value) {
+        IntByReference lpBuffer = new IntByReference(value);
         boolean status = JKernel32.SYNC_INSTANCE.WriteProcessMemory(handle, address,
                 lpBuffer, INT_SIZE, null);
         if (!status) {
             throw new Win32Exception(JKernel32.SYNC_INSTANCE.GetLastError());
         }
-        Kernel32Util.freeLocalMemory(lpBuffer.getPointer());
     }
 
 }
