@@ -12,10 +12,10 @@ public class ProcessMemoryBuilder {
 
     private String windowName;
 
-    private List<Integer> address = new LinkedList<>();
+    private int address;
 
-    public ProcessMemoryBuilder address(int value) {
-        this.address.add(value);
+    public ProcessMemoryBuilder address(int address) {
+        this.address = address;
         return this;
     }
 
@@ -30,20 +30,12 @@ public class ProcessMemoryBuilder {
     }
 
     public ProcessMemory build() {
-        return new ProcessMemoryImpl(getPId(), getAddress());
+        return new ProcessMemoryImpl(getPId(), address);
     }
 
     private int getPId() {
         HWND hWnd = JUser32Api.findWindow(className, windowName);
         return JUser32Api.getWindowThreadProcessId(hWnd);
-    }
-
-    private int getAddress() {
-        int ret = 0;
-        for (int item: address) {
-            ret += item;
-        }
-        return ret;
     }
 
 }
