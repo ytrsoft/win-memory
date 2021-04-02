@@ -3,8 +3,6 @@ package com.ytrsoft.ui;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public abstract class AppGUI extends XFrame implements ChangeListener {
 
@@ -19,7 +17,7 @@ public abstract class AppGUI extends XFrame implements ChangeListener {
         mXSlider = new XSlider();
         mXSlider.addChangeListener(this);
         root.add(mXSlider);
-        onInit(mXSlider);
+        onInit();
     }
 
     @Override
@@ -30,8 +28,12 @@ public abstract class AppGUI extends XFrame implements ChangeListener {
         }
     }
 
-    protected abstract void onInit(XSlider slider);
-    protected abstract void onUpdate(int val);
+    protected void setValue(int value) {
+        this.mXSlider.setValue(value);
+    }
+
+    protected abstract void onInit();
+    protected abstract void onUpdate(int value);
 
 }
 
