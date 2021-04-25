@@ -22,7 +22,7 @@ public abstract class XFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setIconImage(iconImage("java"));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel root = new JPanel();
         start(root);
         setContentPane(root);
