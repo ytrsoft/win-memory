@@ -30,13 +30,13 @@ public abstract class XFrame extends JFrame {
 
     protected abstract void start(JPanel root);
 
-    private static Image iconImage(String name) {
+    private Image iconImage(String name) {
         SVGIcon svg = new SVGIcon();
         svg.setSvgURI(getResourcesURI(name));
         return svg.getImage();
     }
 
-    private static URI getResourcesURI(String name) {
+    private URI getResourcesURI(String name) {
         name = String.format("/svg/%s.svg", name) ;
         try {
             return XFrame.class.getResource(name).toURI();
