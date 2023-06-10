@@ -21,7 +21,7 @@ public abstract class XFrame extends JFrame {
         setSize(width, height);
         setLocationRelativeTo(null);
         setResizable(false);
-        setIconImage(iconImage("java"));
+        setIconImage(iconImage());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel root = new JPanel();
         start(root);
@@ -30,9 +30,9 @@ public abstract class XFrame extends JFrame {
 
     protected abstract void start(JPanel root);
 
-    private Image iconImage(String name) {
+    private Image iconImage() {
         SVGIcon svg = new SVGIcon();
-        svg.setSvgURI(getResourcesURI(name));
+        svg.setSvgURI(getResourcesURI("java"));
         return svg.getImage();
     }
 
