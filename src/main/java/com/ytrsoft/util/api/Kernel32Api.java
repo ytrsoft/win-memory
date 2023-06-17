@@ -3,8 +3,6 @@ package com.ytrsoft.util.api;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.*;
 import com.sun.jna.ptr.IntByReference;
-import com.ytrsoft.simplified.NTHandle;
-import com.ytrsoft.simplified.SystemInfo;
 import com.ytrsoft.simplified.VirtualQuery;
 import com.ytrsoft.util.share.RefFree;
 
@@ -29,7 +27,7 @@ public final class Kernel32Api {
      * @param handle 要关闭的句柄
      * @return 执行状态
      */
-    public static boolean closeHandle(NTHandle handle) {
+    public static boolean closeHandle(WinNT.HANDLE handle) {
         return CTX.CloseHandle(handle);
     }
 
@@ -38,7 +36,7 @@ public final class Kernel32Api {
      * @param handle 进程的句柄
      * @return 进程的终止状态
      */
-    public static int getExitCodeProcess(NTHandle handle) {
+    public static int getExitCodeProcess(WinNT.HANDLE handle) {
         IntByReference ref = new IntByReference();
         CTX.GetExitCodeProcess(handle, ref);
         int valued = ref.getValue();
@@ -52,7 +50,7 @@ public final class Kernel32Api {
      * @param exitCode 进程和由该函数终止的线程的退出代码
      * @return 执行状态
      */
-    public static boolean terminateProcess(NTHandle handle, int exitCode) {
+    public static boolean terminateProcess(WinNT.HANDLE handle, int exitCode) {
         return CTX.TerminateProcess(handle, exitCode);
     }
 
@@ -62,7 +60,7 @@ public final class Kernel32Api {
      * @param processEntry 进程信息
      * @return 执行状态
      */
-    public static boolean process32First(NTHandle handle, Tlhelp32.PROCESSENTRY32 processEntry) {
+    public static boolean process32First(WinNT.HANDLE handle, Tlhelp32.PROCESSENTRY32 processEntry) {
         return CTX.Process32First(handle, processEntry);
     }
 
@@ -72,7 +70,7 @@ public final class Kernel32Api {
      * @param processEntry 进程信息
      * @return 执行状态
      */
-    public static boolean process32Next(NTHandle handle, Tlhelp32.PROCESSENTRY32 processEntry) {
+    public static boolean process32Next(WinNT.HANDLE handle, Tlhelp32.PROCESSENTRY32 processEntry) {
         return CTX.Process32Next(handle, processEntry);
     }
 
@@ -82,7 +80,7 @@ public final class Kernel32Api {
      * @param moduleEntry 模块信息
      * @return 执行状态
      */
-    public static boolean module32First(NTHandle handle, Tlhelp32.MODULEENTRY32W moduleEntry) {
+    public static boolean module32First(WinNT.HANDLE handle, Tlhelp32.MODULEENTRY32W moduleEntry) {
         return CTX.Module32FirstW(handle, moduleEntry);
     }
 
@@ -92,7 +90,7 @@ public final class Kernel32Api {
      * @param moduleEntry 模块信息
      * @return 执行状态
      */
-    public static boolean module32Next(NTHandle handle, Tlhelp32.MODULEENTRY32W moduleEntry) {
+    public static boolean module32Next(WinNT.HANDLE handle, Tlhelp32.MODULEENTRY32W moduleEntry) {
         return CTX.Module32NextW(handle, moduleEntry);
     }
 
@@ -101,7 +99,7 @@ public final class Kernel32Api {
      * @param handle 进程的句柄
      * @return 执行状态
      */
-    public static boolean is64BitProcess(NTHandle handle) {
+    public static boolean is64BitProcess(WinNT.HANDLE handle) {
         IntByReference wow64Process = new IntByReference(0);
         CTX.IsWow64Process(handle, wow64Process);
         int valued = wow64Process.getValue();
@@ -113,7 +111,7 @@ public final class Kernel32Api {
      * 获取系统信息
      * @param info 存储系统信息的对象
      */
-    public static void GetSystemInfo(SystemInfo info) {
+    public static void GetSystemInfo(WinBase.SYSTEM_INFO info) {
         CTX.GetSystemInfo(info);
     }
 
@@ -122,8 +120,8 @@ public final class Kernel32Api {
      * @param pid 进程的 PID
      * @return 进程的句柄
      */
-    public static NTHandle openProcess(int pid) {
-        return (NTHandle)CTX.OpenProcess(
+    public static WinNT.HANDLE openProcess(int pid) {
+        return CTX.OpenProcess(
             WinNT.PROCESS_ALL_ACCESS,
             false,
             pid
@@ -136,9 +134,9 @@ public final class Kernel32Api {
      * @param pid  要获取快照的进程的ID，0表示获取所有进程的快照
      * @return 返回进程快照的句柄
      */
-    public static NTHandle createToolhelp32Snapshot(long flags, int pid) {
+    public static WinNT.HANDLE createToolhelp32Snapshot(long flags, int pid) {
         WinDef.DWORD dwFlags = new WinDef.DWORD(flags);
-        return (NTHandle)CTX.CreateToolhelp32Snapshot(
+        return CTX.CreateToolhelp32Snapshot(
             dwFlags,
             new WinNT.DWORD(pid)
         );
@@ -150,7 +148,7 @@ public final class Kernel32Api {
      * @param lpAddress  内存地址
      * @return 虚拟内存信息
      */
-    public static VirtualQuery virtualQuery(NTHandle handle, long lpAddress) {
+    public static VirtualQuery virtualQuery(WinNT.HANDLE handle, long lpAddress) {
         VirtualQuery virtual = new VirtualQuery();
         WinNT.MEMORY_BASIC_INFORMATION lpBuffer = new WinNT.MEMORY_BASIC_INFORMATION();
         CTX.VirtualQueryEx(

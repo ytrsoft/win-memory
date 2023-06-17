@@ -3,7 +3,6 @@ package com.ytrsoft.util.api;
 import com.sun.jna.platform.win32.Advapi32;
 import com.sun.jna.platform.win32.WinNT;
 import com.ytrsoft.simplified.ProcessToken;
-import com.ytrsoft.simplified.NTHandle;
 import com.ytrsoft.simplified.TokenHandler;
 
 /**
@@ -22,7 +21,7 @@ public class Advapi32Api {
      * @param handle 进程句柄
      * @return 表示进程访问令牌的ProcessToken对象
      */
-    public ProcessToken openProcessToken(NTHandle handle) {
+    public ProcessToken openProcessToken(WinNT.HANDLE handle) {
         ProcessToken token = new ProcessToken();
         TokenHandler handler = new TokenHandler();
         boolean status = CTX.OpenProcessToken(

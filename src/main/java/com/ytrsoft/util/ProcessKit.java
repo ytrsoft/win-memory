@@ -1,8 +1,8 @@
 package com.ytrsoft.util;
 
 import com.sun.jna.platform.win32.Tlhelp32;
+import com.sun.jna.platform.win32.WinNT;
 import com.ytrsoft.entity.Process;
-import com.ytrsoft.simplified.NTHandle;
 import com.ytrsoft.util.api.Kernel32Api;
 import com.ytrsoft.util.api.PsapiApi;
 import com.ytrsoft.util.icon.IconExtract;
@@ -23,7 +23,7 @@ public final class ProcessKit {
     }
 
     private static ImageIcon getIcon(int pid) {
-        NTHandle handle = Kernel32Api.openProcess(pid);
+        WinNT.HANDLE handle = Kernel32Api.openProcess(pid);
         String fileName = PsapiApi.getModuleName(handle);
         BufferedImage img = IconExtract.getIconForFile(
             ICON_SIZE,
@@ -38,7 +38,7 @@ public final class ProcessKit {
         List<Process> roots = new ArrayList<>();
         Tlhelp32.PROCESSENTRY32 processEntry = new Tlhelp32.PROCESSENTRY32();
         long flags = Tlhelp32.TH32CS_SNAPPROCESS.longValue();
-        NTHandle handle = Kernel32Api.createToolhelp32Snapshot(flags, 0);
+        WinNT.HANDLE handle = Kernel32Api.createToolhelp32Snapshot(flags, 0);
         if (Kernel32Api.process32First(handle, processEntry)) {
             do {
                 Process process = new Process();

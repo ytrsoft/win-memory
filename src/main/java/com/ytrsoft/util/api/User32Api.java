@@ -1,8 +1,8 @@
     package com.ytrsoft.util.api;
 
     import com.sun.jna.platform.win32.User32;
+    import com.sun.jna.platform.win32.WinDef;
     import com.sun.jna.ptr.IntByReference;
-    import com.ytrsoft.simplified.WinHandle;
     import com.ytrsoft.util.share.RefFree;
 
     /**
@@ -21,8 +21,8 @@
          * @param name 窗口名称
          * @return 窗口句柄
          */
-        public static WinHandle findHandle(String name) {
-            return (WinHandle) CTX.FindWindow(null, name);
+        public static WinDef.HWND findHandle(String name) {
+            return CTX.FindWindow(null, name);
         }
 
         /**
@@ -30,7 +30,7 @@
          * @param handle 窗口句柄
          * @return 窗口所属的进程ID
          */
-        public static int getPId(WinHandle handle) {
+        public static int getPId(WinDef.HWND handle) {
             IntByReference ref = new IntByReference();
             CTX.GetWindowThreadProcessId(handle, ref);
             int valued = ref.getValue();
