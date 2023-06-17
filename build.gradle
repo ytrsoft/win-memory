@@ -10,13 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.weblookandfeel', name: 'svg-salamander', version: '1.1.2.2'
-    implementation group: 'com.github.weisj', name: 'darklaf-core', version: '2.5.5'
-    implementation group: 'com.google.guava', name: 'guava', version: '23.0'
     implementation group: 'net.java.dev.jna', name: 'jna', version: '5.8.0'
     implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.8.0'
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
 }
