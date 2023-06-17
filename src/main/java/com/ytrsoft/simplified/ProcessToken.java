@@ -1,4 +1,4 @@
-package com.ytrsoft.entity;
+package com.ytrsoft.simplified;
 
 import com.sun.jna.platform.win32.WinNT;
 
@@ -16,6 +16,10 @@ public class ProcessToken {
 
     public void setPrivileges(WinNT.TOKEN_PRIVILEGES privileges) {
         this.privileges = privileges;
+    }
+
+    public WinNT.LUID luid() {
+        return getPrivileges().Privileges[0].Luid;
     }
 
     public WinNT.HANDLE getHandle() {

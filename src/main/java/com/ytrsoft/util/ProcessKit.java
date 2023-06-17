@@ -1,14 +1,18 @@
 package com.ytrsoft.util;
 
 import com.sun.jna.platform.win32.Tlhelp32;
-import com.sun.jna.platform.win32.WinDef;
-import com.sun.jna.platform.win32.WinNT;
 import com.ytrsoft.entity.Process;
-import com.ytrsoft.util.icon.JIconExtract;
+import com.ytrsoft.simplified.NTHandle;
+import com.ytrsoft.util.api.Kernel32Api;
+import com.ytrsoft.util.api.PsapiApi;
+import com.ytrsoft.util.icon.IconExtract;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class ProcessKit {
 
@@ -19,9 +23,13 @@ public final class ProcessKit {
     }
 
     private static ImageIcon getIcon(int pid) {
-        WinNT.HANDLE pHandle = Kernel32Api.openProcess(pid);
-        String fileName = PsapiApi.getModuleFileName(pHandle);
-        BufferedImage img = JIconExtract.getIconForFile(ICON_SIZE, ICON_SIZE, fileName);
+        NTHandle handle = Kernel32Api.openProcess(pid);
+        String fileName = PsapiApi.getModuleName(handle);
+        BufferedImage img = IconExtract.getIconForFile(
+            ICON_SIZE,
+            ICON_SIZE,
+            fileName
+        );
         return img != null ? new ImageIcon(img) : null;
     }
 
@@ -29,8 +37,8 @@ public final class ProcessKit {
         Map<Integer, Process> processMap = new HashMap<>();
         List<Process> roots = new ArrayList<>();
         Tlhelp32.PROCESSENTRY32 processEntry = new Tlhelp32.PROCESSENTRY32();
-        WinDef.DWORD flag = Tlhelp32.TH32CS_SNAPPROCESS;
-        WinNT.HANDLE handle = Kernel32Api.createToolhelp32Snapshot(flag, 0);
+        long flags = Tlhelp32.TH32CS_SNAPPROCESS.longValue();
+        NTHandle handle = Kernel32Api.createToolhelp32Snapshot(flags, 0);
         if (Kernel32Api.process32First(handle, processEntry)) {
             do {
                 Process process = new Process();

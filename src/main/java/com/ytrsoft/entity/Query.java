@@ -1,16 +1,17 @@
 package com.ytrsoft.entity;
 
 public class Query<T> {
-    private int errorCode;
+
+    private int error;
     private String message;
     private T value;
 
-    public int getErrorCode() {
-        return errorCode;
+    public int getError() {
+        return error;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setError(int error) {
+        this.error = error;
     }
 
     public String getMessage() {
@@ -28,4 +29,5 @@ public class Query<T> {
     public void setValue(T value) {
         this.value = value;
     }
+
 }

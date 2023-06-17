@@ -1,6 +1,7 @@
 package com.ytrsoft.entity;
 
 public class Range {
+
     private long min;
     private long max;
 

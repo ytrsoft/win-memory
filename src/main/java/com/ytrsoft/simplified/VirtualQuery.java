@@ -1,8 +1,8 @@
-package com.ytrsoft.entity;
+package com.ytrsoft.simplified;
 
 import com.sun.jna.platform.win32.WinNT;
 
-public class Virtual {
+public class VirtualQuery {
 
     private int state;
     private int protect;
