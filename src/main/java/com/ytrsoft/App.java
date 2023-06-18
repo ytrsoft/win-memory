@@ -27,9 +27,9 @@ public class App extends AppUI implements ActionListener {
         super(650, 700);
     }
 
-    private void buildTree(DefaultMutableTreeTableNode parent, List<Process> processes) {
+    private void buildTree(ProcessNode parent, List<Process> processes) {
         for (Process process : processes) {
-            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(process);
+            ProcessNode node = new ProcessNode(process);
             parent.add(node);
             List<Process> children = process.getChildren();
             if (children != null && !children.isEmpty()) {
@@ -38,13 +38,13 @@ public class App extends AppUI implements ActionListener {
         }
     }
 
-    private DefaultMutableTreeTableNode createTreeNodes(List<Process> processes) {
-        DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode();
+    private ProcessNode createTreeNodes(List<Process> processes) {
+        ProcessNode root = new ProcessNode();
         buildTree(root, processes);
         return root;
     }
 
-    private ProcessTreeTable createProcessTreeTable(DefaultMutableTreeTableNode nodes) {
+    private ProcessTreeTable createProcessTreeTable(ProcessNode nodes) {
         model = new ProcessTreeTableModel(nodes);
         return new ProcessTreeTable(model);
     }
@@ -105,7 +105,7 @@ public class App extends AppUI implements ActionListener {
     @Override
     protected void initUI() {
         this.processes = processes();
-        DefaultMutableTreeTableNode nodes = createTreeNodes(processes);
+        ProcessNode nodes = createTreeNodes(processes);
         treeTable = createProcessTreeTable(nodes);
         JScrollPane scrollPane = new JScrollPane(treeTable);
         addCenter(scrollPane);

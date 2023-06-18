@@ -1,9 +1,7 @@
 package com.ytrsoft.gui;
 
-import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 import org.jdesktop.swingx.treetable.TreeTableNode;
-
 
 import com.ytrsoft.entity.Process;
 
@@ -17,8 +15,8 @@ public class ProcessTreeTableModel extends DefaultTreeTableModel {
 
     @Override
     public Object getValueAt(Object node, int column) {
-        if (node instanceof DefaultMutableTreeTableNode) {
-            DefaultMutableTreeTableNode treeNode = (DefaultMutableTreeTableNode) node;
+        if (node instanceof ProcessNode) {
+            ProcessNode treeNode = (ProcessNode) node;
             Object userObject = treeNode.getUserObject();
             if(userObject instanceof Process) {
                 Process process = (Process) userObject;
@@ -39,10 +37,5 @@ public class ProcessTreeTableModel extends DefaultTreeTableModel {
     @Override
     public int getColumnCount() {
         return COLUMN_NAMES.length;
-    }
-
-    @Override
-    public boolean isCellEditable(Object node, int column) {
-        return false;
     }
 }

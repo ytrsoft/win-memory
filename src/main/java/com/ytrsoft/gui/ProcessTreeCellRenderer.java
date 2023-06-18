@@ -9,10 +9,13 @@ import java.awt.*;
 public class ProcessTreeCellRenderer extends DefaultTreeCellRenderer {
 
     @Override
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
         Component component = super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+        if (selected) {
+            tree.clearSelection();
+        }
         if (value instanceof DefaultMutableTreeTableNode) {
-            DefaultMutableTreeTableNode treeNode = (DefaultMutableTreeTableNode) value;
+            ProcessNode treeNode = (ProcessNode) value;
             Object userObject = treeNode.getUserObject();
             if(userObject instanceof Process) {
                 Process process = (Process) userObject;
