@@ -34,8 +34,7 @@ public final class ProcessKit {
     }
 
     public static List<Process> forList() {
-        Map<Integer, Process> processMap = new HashMap<>();
-        List<Process> roots = new ArrayList<>();
+        List<Process> list = new ArrayList<>();
         Tlhelp32.PROCESSENTRY32 processEntry = new Tlhelp32.PROCESSENTRY32();
         long flags = Tlhelp32.TH32CS_SNAPPROCESS.longValue();
         WinNT.HANDLE handle = Kernel32Api.createToolhelp32Snapshot(flags, 0);
@@ -46,25 +45,10 @@ public final class ProcessKit {
                 process.setId(processEntry.th32ProcessID.intValue());
                 ImageIcon icon = getIcon(process.getId());
                 process.setIcon(icon);
-                processMap.put(process.getId(), process);
+                list.add(process);
             } while (Kernel32Api.process32Next(handle, processEntry));
         }
-        Kernel32Api.process32First(handle, processEntry);
-        do {
-            int currentProcessId = processEntry.th32ProcessID.intValue();
-            int parentId = processEntry.th32ParentProcessID.intValue();
-            Process currentProcess = processMap.get(currentProcessId);
-            Process parentProcess = processMap.get(parentId);
-            if (parentProcess != null) {
-                if (parentProcess.getChildren() == null) {
-                    parentProcess.setChildren(new ArrayList<>());
-                }
-                parentProcess.getChildren().add(currentProcess);
-            } else {
-                roots.add(currentProcess);
-            }
-        } while (Kernel32Api.process32Next(handle, processEntry));
-        return roots;
+        return list;
     }
 
 }

@@ -9,7 +9,7 @@ import com.ytrsoft.entity.Process;
 
 public class ProcessTreeTableModel extends DefaultTreeTableModel {
 
-    private static final String[] COLUMN_NAMES = {"名称", "PID"};
+    private static final String[] COLUMN_NAMES = {"名称", "PID", "操作"};
 
     public ProcessTreeTableModel(TreeTableNode root) {
         super(root);
@@ -22,11 +22,10 @@ public class ProcessTreeTableModel extends DefaultTreeTableModel {
             Object userObject = treeNode.getUserObject();
             if(userObject instanceof Process) {
                 Process process = (Process) userObject;
-                Object[] row = new Object[] {
-                    process.getName(),
-                    process.getId()
-                };
-                return row[column];
+                if (column == 1) {
+                    return process.getId();
+                }
+                return null;
             }
         }
         return null;

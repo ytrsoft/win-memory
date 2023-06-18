@@ -108,7 +108,6 @@ public class App extends AppUI implements ActionListener {
         this.processes = processes();
         DefaultMutableTreeTableNode nodes = createTreeNodes(processes);
         treeTable = createProcessTreeTable(nodes);
-        treeTable.setDefaultRenderer(Object.class, new CenterAlignedCellRenderer());
         JScrollPane scrollPane = new JScrollPane(treeTable);
         addCenter(scrollPane);
 
