@@ -78,26 +78,11 @@ public class App extends AppUI implements ActionListener {
         model.setRoot(nodes);
     }
 
-    private void findMatchingNodes(DefaultMutableTreeTableNode node, List<DefaultMutableTreeTableNode> matchingNodes, String pid) {
-        Object userObject = node.getUserObject();
-        if (userObject instanceof Process) {
-            Process process = (Process) userObject;
-            if (String.valueOf(process.getId()).equals(pid)) {
-                matchingNodes.add(node);
-            }
-        }
-        for (int i = 0; i < node.getChildCount(); i++) {
-            DefaultMutableTreeTableNode child = (DefaultMutableTreeTableNode) node.getChildAt(i);
-            findMatchingNodes(child, matchingNodes, pid);
-        }
-    }
-
     private void resetTree() {
         this.processes = processes();
         DefaultMutableTreeTableNode nodes = createTreeNodes(processes);
         model.setRoot(nodes);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
