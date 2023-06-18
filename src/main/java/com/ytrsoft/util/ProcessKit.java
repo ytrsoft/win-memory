@@ -16,8 +16,6 @@ import java.util.Map;
 
 public final class ProcessKit {
 
-    private static final int ICON_SIZE = 12;
-
     private ProcessKit() {
         throw new UnsupportedOperationException();
     }
@@ -26,8 +24,8 @@ public final class ProcessKit {
         WinNT.HANDLE handle = Kernel32Api.openProcess(pid);
         String fileName = PsapiApi.getModuleName(handle);
         BufferedImage img = IconExtract.getIconForFile(
-            ICON_SIZE,
-            ICON_SIZE,
+            Constants.PROCESS_TABLE_ICON_SIZE,
+            Constants.PROCESS_TABLE_ICON_SIZE,
             fileName
         );
         return img != null ? new ImageIcon(img) : null;
@@ -43,12 +41,33 @@ public final class ProcessKit {
                 Process process = new Process();
                 process.setName(new String((processEntry.szExeFile)).trim());
                 process.setId(processEntry.th32ProcessID.intValue());
+                process.setParentId(processEntry.th32ParentProcessID.intValue());
                 ImageIcon icon = getIcon(process.getId());
                 process.setIcon(icon);
                 list.add(process);
             } while (Kernel32Api.process32Next(handle, processEntry));
         }
-        return list;
+        return createProcessTree(list);
+    }
+
+    public static List<Process> createProcessTree(List<Process> flatList) {
+        Map<Integer, Process> processMap = new HashMap<>();
+        List<Process> roots = new ArrayList<>();
+        for (Process process : flatList) {
+            processMap.put(process.getId(), process);
+        }
+        for (Process process : flatList) {
+            Process parentProcess = processMap.get(process.getParentId());
+            if (parentProcess != null) {
+                if (parentProcess.getChildren() == null) {
+                    parentProcess.setChildren(new ArrayList<>());
+                }
+                parentProcess.getChildren().add(process);
+            } else {
+                roots.add(process);
+            }
+        }
+        return roots;
     }
 
 }

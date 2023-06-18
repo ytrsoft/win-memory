@@ -1,12 +1,12 @@
 package com.ytrsoft.entity;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Process {
 
     private int id;
+    private int parentId;
     private String name;
     private ImageIcon icon;
     private List<Process> children;
@@ -17,6 +17,14 @@ public class Process {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 
     public String getName() {
@@ -47,6 +55,7 @@ public class Process {
     public String toString() {
         return "Process{" +
                 "id=" + id +
+                ", parentId=" + parentId +
                 ", name='" + name + '\'' +
                 ", icon=" + icon +
                 ", children=" + children +
