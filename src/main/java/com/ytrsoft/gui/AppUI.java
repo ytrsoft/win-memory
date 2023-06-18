@@ -3,15 +3,14 @@ package com.ytrsoft.gui;
 import com.github.weisj.darklaf.LafManager;
 import com.github.weisj.darklaf.theme.DarculaTheme;
 import com.ytrsoft.util.img.svg.JavaSvgLoader;
-import org.jdesktop.swingx.JXFrame;
 import dorkbox.systemTray.SystemTray;
 
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class AppUI extends JXFrame {
+public abstract class AppUI extends JFrame implements AddComponent {
 
-    private JPanel root;
+    private final JPanel root;
 
     private final JavaSvgLoader logo = new JavaSvgLoader();
 
@@ -29,6 +28,7 @@ public abstract class AppUI extends JXFrame {
         initUI();
         setContentPane(root);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     private Image getLogoImage() {
@@ -47,8 +47,29 @@ public abstract class AppUI extends JXFrame {
 
     protected abstract void initUI();
 
-    protected void addCenter(JComponent component) {
+    @Override
+    public void addCenter(JComponent component) {
         root.add(component, BorderLayout.CENTER);
+    }
+
+    @Override
+    public void addEast(JComponent component) {
+        root.add(component, BorderLayout.EAST);
+    }
+
+    @Override
+    public void addSouth(JComponent component) {
+        root.add(component, BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void addNorth(JComponent component) {
+        root.add(component, BorderLayout.NORTH);
+    }
+
+    @Override
+    public void addWest(JComponent component) {
+        root.add(component, BorderLayout.WEST);
     }
 
     public static void launch(Class<? extends AppUI> clz) {

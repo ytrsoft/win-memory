@@ -1,9 +1,15 @@
 package com.ytrsoft.gui;
 
+import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 import org.jdesktop.swingx.treetable.TreeTableNode;
 
+
+import com.ytrsoft.entity.Process;
+
 public class ProcessTreeTableModel extends DefaultTreeTableModel {
+
+    private static final String[] COLUMN_NAMES = {"名称", "PID"};
 
     public ProcessTreeTableModel(TreeTableNode root) {
         super(root);
@@ -11,12 +17,29 @@ public class ProcessTreeTableModel extends DefaultTreeTableModel {
 
     @Override
     public Object getValueAt(Object node, int column) {
-        return "Column-" + column;
+        if (node instanceof DefaultMutableTreeTableNode) {
+            DefaultMutableTreeTableNode treeNode = (DefaultMutableTreeTableNode) node;
+            Object userObject = treeNode.getUserObject();
+            if(userObject instanceof Process) {
+                Process process = (Process) userObject;
+                Object[] row = new Object[] {
+                    process.getName(),
+                    process.getId()
+                };
+                return row[column];
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        return COLUMN_NAMES[column];
     }
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return COLUMN_NAMES.length;
     }
 
     @Override
