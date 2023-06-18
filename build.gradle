@@ -12,6 +12,7 @@ repositories {
 dependencies {
     implementation group: 'net.java.dev.jna', name: 'jna', version: '5.8.0'
     implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.8.0'
+    implementation group: 'org.swinglabs', name: 'swingx', version: '1.6.1'
 }
 
 tasks.withType(JavaCompile).configureEach {
