@@ -43,23 +43,6 @@ public class Process {
         this.children = children;
     }
 
-    public Process copy() {
-        Process copy = new Process();
-        copy.setId(this.id);
-        copy.setName(this.name);
-        copy.setIcon(this.icon);
-
-        List<Process> copiedChildren = new ArrayList<>();
-        if (this.children != null) {
-            for (Process child : this.children) {
-                copiedChildren.add(child.copy());
-            }
-        }
-        copy.setChildren(copiedChildren);
-
-        return copy;
-    }
-
     @Override
     public String toString() {
         return "Process{" +

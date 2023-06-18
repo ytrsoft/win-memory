@@ -1,10 +1,7 @@
 package com.ytrsoft;
 
 import com.ytrsoft.entity.Process;
-import com.ytrsoft.gui.AppUI;
-import com.ytrsoft.gui.ProcessCellRenderer;
-import com.ytrsoft.gui.ProcessTreeTable;
-import com.ytrsoft.gui.ProcessTreeTableModel;
+import com.ytrsoft.gui.*;
 import com.ytrsoft.util.ProcessKit;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 
@@ -12,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class App extends AppUI implements ActionListener {
     private JButton resetButton;
     private ProcessTreeTableModel model;
     private List<Process> processes;
+    private ProcessTreeTable treeTable;
 
     public App() {
         super(650, 700);
@@ -52,18 +52,17 @@ public class App extends AppUI implements ActionListener {
 
     private List<Process> filterProcesses(List<Process> processes, String pid) {
         List<Process> filteredProcesses = new ArrayList<>();
-        if (processes != null) {
-            for (Process process : processes) {
-                if (String.valueOf(process.getId()).equals(pid)) {
-                    filteredProcesses.add(process);
-                } else {
-                    List<Process> filteredChildren = filterProcesses(process.getChildren(), pid);
-                    if (!filteredChildren.isEmpty()) {
-                        Process filteredProcess = process.copy();
-                        filteredProcess.setChildren(filteredChildren);
-                        filteredProcesses.add(filteredProcess);
-                    }
-                }
+        if (processes == null) {
+            return filteredProcesses;
+        }
+        for(Process process : processes) {
+            if(String.valueOf(process.getId()).contains(pid)) {
+                filteredProcesses.add(process);
+            }
+            List<Process> children = process.getChildren();
+            if(children != null) {
+                List<Process> filteredChildren = filterProcesses(children, pid);
+                filteredProcesses.addAll(filteredChildren);
             }
         }
         return filteredProcesses;
@@ -74,22 +73,30 @@ public class App extends AppUI implements ActionListener {
         List<Process> processList = filterProcesses(processes, pid);
         DefaultMutableTreeTableNode nodes = createTreeNodes(processList);
         model.setRoot(nodes);
+        treeTable.expandAll();
     }
 
     private void resetTree() {
         this.processes = processes();
         DefaultMutableTreeTableNode nodes = createTreeNodes(processes);
         model.setRoot(nodes);
+        treeTable.expandAll();
+    }
+
+    private void searchHandle() {
+        String pid = searchField.getText().trim();
+        if (!pid.isEmpty()) {
+            filterTree(pid);
+        } else {
+            resetTree();
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
         if(button.equals(searchButton)) {
-            String pid = searchField.getText().trim();
-            if (!pid.isEmpty()) {
-                filterTree(pid);
-            }
+            searchHandle();
         }
         if(button.equals(resetButton)) {
             resetTree();
@@ -100,12 +107,21 @@ public class App extends AppUI implements ActionListener {
     protected void initUI() {
         this.processes = processes();
         DefaultMutableTreeTableNode nodes = createTreeNodes(processes);
-        ProcessTreeTable treeTable = createProcessTreeTable(nodes);
+        treeTable = createProcessTreeTable(nodes);
+        treeTable.setDefaultRenderer(Object.class, new CenterAlignedCellRenderer());
         JScrollPane scrollPane = new JScrollPane(treeTable);
         addCenter(scrollPane);
 
         searchField = new JTextField();
         searchField.setToolTipText("请输入PID");
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    searchHandle();
+                }
+            }
+        });
 
         searchButton = new JButton("搜索");
         searchButton.addActionListener(this);
