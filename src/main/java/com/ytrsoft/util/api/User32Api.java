@@ -3,7 +3,7 @@
     import com.sun.jna.platform.win32.User32;
     import com.sun.jna.platform.win32.WinDef;
     import com.sun.jna.ptr.IntByReference;
-    import com.ytrsoft.util.share.RefFree;
+    import com.ytrsoft.util.RefFree;
 
     /**
      * User32 API工具类

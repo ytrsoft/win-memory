@@ -18,6 +18,7 @@ dependencies {
     implementation group: 'com.dorkbox', name: 'SystemTray', version: '4.2.1'
     implementation group: 'com.github.weisj', name: 'darklaf-core', version: '3.0.2'
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.8'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 }
 
 tasks.withType(JavaCompile).configureEach {

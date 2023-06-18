@@ -1,8 +1,8 @@
 package com.ytrsoft;
 
+import com.ytrsoft.core.ProcessSupport;
 import com.ytrsoft.entity.Process;
 import com.ytrsoft.gui.*;
-import com.ytrsoft.util.ProcessKit;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 
 import javax.swing.*;
@@ -148,7 +148,7 @@ public class App extends AppUI implements ActionListener {
     }
 
     private List<Process> processes() {
-        return ProcessKit.forList();
+        return new ProcessSupport().getProcessTree();
     }
 
     public static void main(String[] args) {

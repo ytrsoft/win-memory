@@ -4,7 +4,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.*;
 import com.sun.jna.ptr.IntByReference;
 import com.ytrsoft.simplified.VirtualQuery;
-import com.ytrsoft.util.share.RefFree;
+import com.ytrsoft.util.RefFree;
 
 public final class Kernel32Api {
 

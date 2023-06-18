@@ -1,4 +1,4 @@
-package com.ytrsoft.util.share;
+package com.ytrsoft.util;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -14,7 +14,7 @@ public class RefFree {
     }
 
     /**
-     * 释放指定PointerType对象所指向的内存。
+     * 释放指定PointerType对象所指向的内存
      * @param pt 需要释放内存的PointerType对象
      */
     public static void free(PointerType pt) {
@@ -24,7 +24,7 @@ public class RefFree {
     }
 
     /**
-     * 释放指定Pointer对象所指向的内存。
+     * 释放指定Pointer对象所指向的内存
      * @param p 需要释放内存的Pointer对象
      */
     public static void free(Pointer p) {
