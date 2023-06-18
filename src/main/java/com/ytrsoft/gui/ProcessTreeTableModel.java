@@ -30,6 +30,11 @@ public class ProcessTreeTableModel extends DefaultTreeTableModel {
     }
 
     @Override
+    public boolean isCellEditable(Object node, int column) {
+        return column == 2;
+    }
+
+    @Override
     public String getColumnName(int column) {
         return COLUMN_NAMES[column];
     }
