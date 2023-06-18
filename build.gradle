@@ -13,6 +13,11 @@ dependencies {
     implementation group: 'net.java.dev.jna', name: 'jna', version: '5.8.0'
     implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.8.0'
     implementation group: 'org.swinglabs', name: 'swingx', version: '1.6.1'
+    implementation 'org.apache.xmlgraphics:batik-transcoder:1.14'
+    implementation 'org.apache.xmlgraphics:batik-svg-dom:1.14'
+    implementation group: 'com.dorkbox', name: 'SystemTray', version: '4.2.1'
+    implementation group: 'com.github.weisj', name: 'darklaf-core', version: '3.0.2'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.8'
 }
 
 tasks.withType(JavaCompile).configureEach {
