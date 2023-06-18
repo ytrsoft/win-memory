@@ -16,7 +16,7 @@ import java.util.Map;
 
 public final class ProcessKit {
 
-    private static final int ICON_SIZE = 24;
+    private static final int ICON_SIZE = 12;
 
     private ProcessKit() {
         throw new UnsupportedOperationException();

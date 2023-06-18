@@ -47,8 +47,6 @@ public class App extends AppUI implements ActionListener {
     private ProcessTreeTable createProcessTreeTable(DefaultMutableTreeTableNode nodes) {
         model = new ProcessTreeTableModel(nodes);
         ProcessTreeTable table = new ProcessTreeTable(model);
-        ProcessCellRenderer renderer = new ProcessCellRenderer();
-        table.setDefaultRenderer(Object.class, renderer);
         return table;
     }
 
@@ -122,11 +120,17 @@ public class App extends AppUI implements ActionListener {
         JPanel searchPanel = new JPanel(new BorderLayout());
         searchPanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
-        searchPanel.add(new JLabel("PID:"), BorderLayout.WEST);
+        JLabel label = new JLabel("PID:");
+
+        label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 2));
+
+        searchPanel.add(label, BorderLayout.WEST);
         searchPanel.add(searchField, BorderLayout.CENTER);
         searchPanel.add(buttonPanel, BorderLayout.EAST);
 
         addNorth(searchPanel);
+
+        treeTable.expandAll();
     }
 
     private List<Process> processes() {
