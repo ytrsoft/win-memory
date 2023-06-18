@@ -1,5 +1,7 @@
 package com.ytrsoft.gui;
 
+import com.ytrsoft.util.Constants;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
@@ -16,7 +18,7 @@ public class ProcessCellRenderer extends DefaultTableCellRenderer {
             table.clearSelection();
         }
         if (column == 2) {
-            return new JButton("加载");
+            return new JButton(Constants.PROCESS_TABLE_BTN_LOAD);
         }
         return component;
     }

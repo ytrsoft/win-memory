@@ -2,9 +2,6 @@ package com.ytrsoft.gui;
 
 import org.jdesktop.swingx.JXTreeTable;
 
-import javax.swing.table.TableCellEditor;
-import java.awt.*;
-
 public class ProcessTreeTable extends JXTreeTable {
     public ProcessTreeTable(ProcessTreeTableModel model) {
         super(model);

@@ -1,6 +1,7 @@
 package com.ytrsoft.gui;
 
 import com.ytrsoft.entity.Process;
+import com.ytrsoft.util.Constants;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.TreeTableNode;
@@ -17,7 +18,7 @@ public class ProcessCellEditor extends AbstractCellEditor implements TableCellEd
     private int editRow;
 
     public ProcessCellEditor() {
-        btnLoad = new JButton("加载");
+        btnLoad = new JButton(Constants.PROCESS_TABLE_BTN_LOAD);
         btnLoad.setFocusable(false);
         btnLoad.setFocusPainted(false);
         btnLoad.addActionListener(this);
