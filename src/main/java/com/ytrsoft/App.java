@@ -7,7 +7,6 @@ import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 
 import javax.swing.*;
 
-
 public class App extends AppUI {
 
     public App() {
@@ -16,19 +15,18 @@ public class App extends AppUI {
 
     private ProcessTreeTable createProcessTreeTable() {
         DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode();
+        DefaultMutableTreeTableNode children = new DefaultMutableTreeTableNode();
         root.add(new DefaultMutableTreeTableNode());
         root.add(new DefaultMutableTreeTableNode());
         root.add(new DefaultMutableTreeTableNode());
-        root.add(new DefaultMutableTreeTableNode());
-        root.add(new DefaultMutableTreeTableNode());
-        root.add(new DefaultMutableTreeTableNode());
-        root.add(new DefaultMutableTreeTableNode());
-        root.add(new DefaultMutableTreeTableNode());
-        root.add(new DefaultMutableTreeTableNode());
-        ProcessTreeTableModel model = new ProcessTreeTableModel();
+        root.add(children);
+        children.add(new DefaultMutableTreeTableNode());
+        children.add(new DefaultMutableTreeTableNode());
+        children.add(new DefaultMutableTreeTableNode());
+        ProcessTreeTableModel model = new ProcessTreeTableModel(root);
         JScrollPane scrollPane = new JScrollPane();
         ProcessTreeTable table = new ProcessTreeTable(model);
-        scrollPane.setViewportView(table);
+        scrollPane.add(table);
         return table;
     }
 

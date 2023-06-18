@@ -9,8 +9,6 @@ import dorkbox.systemTray.SystemTray;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.github.weisj.darklaf.LafManager.getPreferredThemeStyle;
-
 public abstract class AppUI extends JXFrame {
 
     private JPanel root;
