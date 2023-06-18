@@ -5,7 +5,7 @@ import com.sun.jna.platform.win32.WinNT;
 import com.ytrsoft.entity.Process;
 import com.ytrsoft.util.api.Kernel32Api;
 import com.ytrsoft.util.api.PsapiApi;
-import com.ytrsoft.util.icon.IconExtract;
+import com.ytrsoft.util.img.IconExtract;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
