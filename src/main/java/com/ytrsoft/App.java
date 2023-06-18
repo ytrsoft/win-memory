@@ -46,8 +46,7 @@ public class App extends AppUI implements ActionListener {
 
     private ProcessTreeTable createProcessTreeTable(DefaultMutableTreeTableNode nodes) {
         model = new ProcessTreeTableModel(nodes);
-        ProcessTreeTable table = new ProcessTreeTable(model);
-        return table;
+        return new ProcessTreeTable(model);
     }
 
     private List<Process> filterProcesses(List<Process> processes, String pid) {
