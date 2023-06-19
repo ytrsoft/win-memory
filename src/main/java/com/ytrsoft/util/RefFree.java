@@ -3,9 +3,11 @@ package com.ytrsoft.util;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
+import org.apache.commons.lang3.ObjectUtils;
 
 /**
  * 释放指针
+ * 注意：重复调用会导致GC崩溃
  */
 public class RefFree {
 
@@ -18,7 +20,7 @@ public class RefFree {
      * @param pt 需要释放内存的PointerType对象
      */
     public static void free(PointerType pt) {
-        if (pt != null) {
+        if (ObjectUtils.isNotEmpty(pt)) {
             free(pt.getPointer());
         }
     }
@@ -28,7 +30,7 @@ public class RefFree {
      * @param p 需要释放内存的Pointer对象
      */
     public static void free(Pointer p) {
-        if (p != null) {
+        if (ObjectUtils.isNotEmpty(p)) {
             Native.free(Pointer.nativeValue(p));
             Pointer.nativeValue(p, 0);
         }
