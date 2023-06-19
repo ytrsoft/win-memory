@@ -6,7 +6,6 @@ import com.ytrsoft.gui.controller.AppController;
 import com.ytrsoft.gui.view.process.ProcessNode;
 import com.ytrsoft.gui.view.process.ProcessTreeTable;
 import com.ytrsoft.gui.view.process.ProcessTreeTableModel;
-import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,7 +96,7 @@ public class App extends AppUI implements ActionListener, KeyListener {
 
     private void resetTree() {
         List<Process> processes = appController.getProcesses();
-        DefaultMutableTreeTableNode nodes = createTreeNodes(processes);
+        ProcessNode nodes = createTreeNodes(processes);
         model.setRoot(nodes);
         treeTable.expandAll();
     }

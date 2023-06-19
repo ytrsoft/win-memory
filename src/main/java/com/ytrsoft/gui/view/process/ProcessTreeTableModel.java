@@ -16,15 +16,18 @@ public class ProcessTreeTableModel extends DefaultTreeTableModel {
     @Override
     public Object getValueAt(Object node, int column) {
         if (node instanceof ProcessNode) {
+            System.out.println(node);
             ProcessNode treeNode = (ProcessNode) node;
             Object userObject = treeNode.getUserObject();
-            if(userObject instanceof Process) {
-                Process process = (Process) userObject;
-                if (column == 1) {
-                    return process.getId();
-                }
-                return null;
-            }
+            System.out.println(userObject.getClass().getPackageName());
+//            if(userObject instanceof Process) {
+//                System.out.println(userObject.toString());
+//                Process process = (Process) userObject;
+//                if (column == 1) {
+//                    return process.getId();
+//                }
+//                return null;
+//            }
         }
         return null;
     }

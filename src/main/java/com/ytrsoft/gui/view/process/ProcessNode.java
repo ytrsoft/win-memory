@@ -5,5 +5,7 @@ import com.ytrsoft.gui.base.EntityTreeTableNode;
 
 public class ProcessNode extends EntityTreeTableNode<Process> {
     public ProcessNode() {}
-    public ProcessNode(Process process) {}
+    public ProcessNode(Process process) {
+        super(process);
+    }
 }
