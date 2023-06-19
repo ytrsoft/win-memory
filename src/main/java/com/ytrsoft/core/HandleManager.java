@@ -15,6 +15,10 @@ public class HandleManager {
         this.handle = Kernel32Api.openProcess(pid);
     }
 
+    public BufferedImage getIcon(int size) {
+        return getIcon(size, size);
+    }
+
     public BufferedImage getIcon(int width, int height) {
         String fileName = PsapiApi.getModuleName(handle);
         return IconExtract.getIconForFile(
