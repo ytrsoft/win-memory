@@ -7,8 +7,8 @@ import org.apache.commons.lang3.ObjectUtils;
 
 /**
  * 释放指针
- * 注意：重复调用会导致GC崩溃
- * 释放完及时置为null
+ * 注意：Pointer.nativeValue
+ * 重复调用会导致GC崩溃
  */
 public class RefFree {
 
