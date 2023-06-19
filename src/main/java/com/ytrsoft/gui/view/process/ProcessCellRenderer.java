@@ -1,4 +1,4 @@
-package com.ytrsoft.gui;
+package com.ytrsoft.gui.view.process;
 
 import com.ytrsoft.util.Constants;
 

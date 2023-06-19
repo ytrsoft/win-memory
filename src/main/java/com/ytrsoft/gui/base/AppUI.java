@@ -1,4 +1,4 @@
-package com.ytrsoft.gui;
+package com.ytrsoft.gui.base;
 
 import com.github.weisj.darklaf.LafManager;
 import com.github.weisj.darklaf.theme.DarculaTheme;
@@ -8,21 +8,21 @@ import dorkbox.systemTray.SystemTray;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class AppUI extends JFrame implements AddComponent {
+public abstract class AppUI extends JFrame implements PositionedComponent {
 
     private final JPanel root;
 
     private final JavaSvgLoader logo = new JavaSvgLoader();
 
-    public AppUI(int width, int height) {
-        this("Java", width, height);
+    public AppUI() {
+        this("Java");
     }
 
-    public AppUI(String title, int width, int height) {
+    public AppUI(String title) {
         super(title);
+        setSize(getSized());
         loadAppIcon();
         loadTrayIcon();
-        setSize(width, height);
         root = new JPanel();
         root.setLayout(new BorderLayout());
         initUI();
@@ -46,6 +46,10 @@ public abstract class AppUI extends JFrame implements AddComponent {
     }
 
     protected abstract void initUI();
+
+    protected Dimension getSized() {
+        return new Dimension(0, 0);
+    }
 
     @Override
     public void addCenter(JComponent component) {

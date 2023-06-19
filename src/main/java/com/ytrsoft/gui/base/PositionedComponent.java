@@ -1,8 +1,8 @@
-package com.ytrsoft.gui;
+package com.ytrsoft.gui.base;
 
 import javax.swing.*;
 
-public interface AddComponent {
+public interface PositionedComponent {
     void addCenter(JComponent component);
     void addNorth(JComponent component);
     void addEast(JComponent component);

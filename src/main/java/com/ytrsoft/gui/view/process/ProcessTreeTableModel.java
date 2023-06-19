@@ -1,4 +1,4 @@
-package com.ytrsoft.gui;
+package com.ytrsoft.gui.view.process;
 
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 import org.jdesktop.swingx.treetable.TreeTableNode;
