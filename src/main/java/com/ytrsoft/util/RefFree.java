@@ -10,7 +10,7 @@ import org.apache.commons.lang3.ObjectUtils;
  * 注意：Pointer.nativeValue
  * 重复调用会导致GC崩溃
  */
-public class RefFree {
+public final class RefFree {
 
     private RefFree() {
         throw new UnsupportedOperationException();
