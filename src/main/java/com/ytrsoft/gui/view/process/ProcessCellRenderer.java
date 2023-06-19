@@ -1,12 +1,14 @@
 package com.ytrsoft.gui.view.process;
 
 import com.ytrsoft.util.Constants;
+import org.apache.bcel.generic.RETURN;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 public class ProcessCellRenderer extends DefaultTableCellRenderer {
+
     public ProcessCellRenderer() {
         setHorizontalAlignment(SwingConstants.CENTER);
     }
@@ -17,8 +19,11 @@ public class ProcessCellRenderer extends DefaultTableCellRenderer {
         if (isSelected) {
             table.clearSelection();
         }
-        if (column == 2) {
-            return new JButton(Constants.PROCESS_TABLE_BTN_LOAD);
+        if (column == Constants.PROCESS_TABLE_BTN_LOAD_INDEX) {
+            JButton btnLoad = new JButton(Constants.PROCESS_TABLE_BTN_LOAD);
+            btnLoad.setFocusable(false);
+            btnLoad.setFocusPainted(false);
+            return btnLoad;
         }
         return component;
     }

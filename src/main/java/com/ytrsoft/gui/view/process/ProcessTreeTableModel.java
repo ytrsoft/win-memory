@@ -1,13 +1,13 @@
 package com.ytrsoft.gui.view.process;
 
+import com.ytrsoft.gui.controller.ProcessTableController;
+import com.ytrsoft.util.Constants;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 import org.jdesktop.swingx.treetable.TreeTableNode;
 
-import com.ytrsoft.entity.Process;
-
 public class ProcessTreeTableModel extends DefaultTreeTableModel {
 
-    private static final String[] COLUMN_NAMES = {"名称", "PID", "操作"};
+    private final ProcessTableController controller = new ProcessTableController();
 
     public ProcessTreeTableModel(TreeTableNode root) {
         super(root);
@@ -15,35 +15,21 @@ public class ProcessTreeTableModel extends DefaultTreeTableModel {
 
     @Override
     public Object getValueAt(Object node, int column) {
-        if (node instanceof ProcessNode) {
-            System.out.println(node);
-            ProcessNode treeNode = (ProcessNode) node;
-            Object userObject = treeNode.getUserObject();
-            System.out.println(userObject.getClass().getPackageName());
-//            if(userObject instanceof Process) {
-//                System.out.println(userObject.toString());
-//                Process process = (Process) userObject;
-//                if (column == 1) {
-//                    return process.getId();
-//                }
-//                return null;
-//            }
-        }
-        return null;
+        return controller.getValueAt(node, column);
     }
 
     @Override
     public boolean isCellEditable(Object node, int column) {
-        return column == 2;
+        return column == Constants.PROCESS_TABLE_BTN_LOAD_INDEX;
     }
 
     @Override
     public String getColumnName(int column) {
-        return COLUMN_NAMES[column];
+        return Constants.PROCESS_TABLE_COLUMN_NAMES[column];
     }
 
     @Override
     public int getColumnCount() {
-        return COLUMN_NAMES.length;
+        return Constants.PROCESS_TABLE_COLUMN_NAMES.length;
     }
 }

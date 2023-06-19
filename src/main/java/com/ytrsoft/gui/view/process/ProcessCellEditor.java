@@ -1,9 +1,10 @@
 package com.ytrsoft.gui.view.process;
 
 import com.ytrsoft.entity.Process;
+import com.ytrsoft.gui.controller.ProcessTableController;
 import com.ytrsoft.util.Constants;
+import org.apache.commons.lang3.ObjectUtils;
 import org.jdesktop.swingx.JXTreeTable;
-import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.TreeTableNode;
 
 import javax.swing.*;
@@ -13,9 +14,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ProcessCellEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+
     private final JButton btnLoad;
     private JXTreeTable treeTable;
     private int editRow;
+    private final ProcessTableController controller = new ProcessTableController();
 
     public ProcessCellEditor() {
         btnLoad = new JButton(Constants.PROCESS_TABLE_BTN_LOAD);
@@ -42,14 +45,9 @@ public class ProcessCellEditor extends AbstractCellEditor implements TableCellEd
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        TreeTableNode node = getNodeAt(editRow);
-        if (node instanceof DefaultMutableTreeTableNode) {
-            DefaultMutableTreeTableNode defaultNode = (DefaultMutableTreeTableNode) node;
-            Object userObject = defaultNode.getUserObject();
-            if (userObject instanceof Process) {
-                Process p = (Process) userObject;
-                doActionRequest(p);
-            }
+        Process process = controller.getProcess(getNodeAt(editRow));
+        if (ObjectUtils.isNotEmpty(process)) {
+            doActionRequest(process);
         }
     }
 

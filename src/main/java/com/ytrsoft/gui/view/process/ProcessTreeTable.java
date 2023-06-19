@@ -1,5 +1,6 @@
 package com.ytrsoft.gui.view.process;
 
+import com.ytrsoft.util.Constants;
 import org.jdesktop.swingx.JXTreeTable;
 
 public class ProcessTreeTable extends JXTreeTable {
@@ -9,6 +10,7 @@ public class ProcessTreeTable extends JXTreeTable {
         setFocusable(false);
         setDefaultRenderer(Object.class, new ProcessCellRenderer());
         setTreeCellRenderer(new ProcessTreeCellRenderer());
-        getColumn(2).setCellEditor(new ProcessCellEditor());
+        int col = Constants.PROCESS_TABLE_BTN_LOAD_INDEX;
+        getColumn(col).setCellEditor(new ProcessCellEditor());
     }
 }
