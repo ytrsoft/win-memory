@@ -51,14 +51,4 @@ public class Process {
         this.children = children;
     }
 
-    @Override
-    public String toString() {
-        return "Process{" +
-                "id=" + id +
-                ", parentId=" + parentId +
-                ", name='" + name + '\'' +
-                ", icon=" + icon +
-                ", children=" + children +
-                '}';
-    }
 }

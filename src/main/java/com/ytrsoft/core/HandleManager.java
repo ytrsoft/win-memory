@@ -7,7 +7,7 @@ import com.ytrsoft.util.img.IconExtract;
 
 import java.awt.image.BufferedImage;
 
-public class HandleManager {
+public class HandleManager implements AutoCloseable {
 
     private final WinNT.HANDLE handle;
 
@@ -28,4 +28,8 @@ public class HandleManager {
         );
     }
 
+    @Override
+    public void close() throws Exception {
+        Kernel32Api.closeHandle(handle);
+    }
 }
